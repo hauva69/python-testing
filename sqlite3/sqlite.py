@@ -8,13 +8,13 @@ import sqlite3
 logging.basicConfig(level=logging.DEBUG)
 
 DB_NAME = 'tutorial.db'
-CREATE_SQL = 'CREATE TABLE movie(title, year, score)'
+CREATE_SQL = 'CREATE TABLE movie(title, year, score, created)'
 INSERT_SQL = """
     INSERT INTO movie VALUES
-        ('Monty Python and the Holy Grail', 1975, 8.2),
-        ('And Now for Something Completely Different', 1971, 7.5)
+        ('Monty Python and the Holy Grail', 1975, 8.2, current_timestamp),
+        ('And Now for Something Completely Different', 1971, 7.5, current_timestamp)
 """
-SELECT_SQL = "SELECT score FROM movie"
+SELECT_SQL = "SELECT * FROM movie"
 
 def _main():
     conn = sqlite3.connect(DB_NAME)
