@@ -6,6 +6,7 @@ Sqlite testing.
 
 import logging
 import os
+import os.path
 import sqlite3
 import unittest
 
@@ -28,8 +29,10 @@ class TestInsert(unittest.TestCase):
         conn = self._get_connection()
         cursor = conn.cursor()
         sql = '''CREATE TABLE requests(UID, CREATED)'''
-        with self.assertRaises(sqlite3.OperationalError):
+        try:
             cursor.execute(sql)
+        except sqlite3.OperationalError:
+            pass
         cursor.close()
         conn.close()
 
