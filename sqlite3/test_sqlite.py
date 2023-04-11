@@ -28,7 +28,7 @@ class TestInsert(unittest.TestCase):
     def test_init_database(self):
         conn = self._get_connection()
         cursor = conn.cursor()
-        sql = '''CREATE TABLE requests(UID, CREATED)'''
+        sql = '''CREATE TABLE requests(UID, RESPONSIBILITY, CREATED)'''
         try:
             cursor.execute(sql)
         except sqlite3.OperationalError:
@@ -49,9 +49,9 @@ class TestInsert(unittest.TestCase):
     def test_user_exists(self):
         conn = self._get_connection()
         cursor = conn.cursor()
-        sql = '''CREATE TABLE requests(UID, CREATED)'''
+        sql = '''CREATE TABLE requests(UID, RESPONSIBILITY, CREATED)'''
         cursor.execute(sql)
-        sql = """INSERT INTO requests (uid, created) VALUES ('hauva',
+        sql = """INSERT INTO requests (uid, responsibility, created) VALUES ('hauva', 'Skändivästüü',
               current_timestamp)"""
         try:
             cursor.execute(sql)
@@ -59,7 +59,7 @@ class TestInsert(unittest.TestCase):
         except sqlite3.OperationalError:
             pass
 
-        sql = """SELECT uid, created FROM requests WHERE uid = 'hauva'"""
+        sql = """SELECT uid, responsibility, created FROM requests WHERE uid = 'hauva'"""
         cursor.execute(sql)
         result = cursor.fetchall()
         logging.debug('result=%s', result)
