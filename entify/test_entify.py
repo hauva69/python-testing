@@ -32,7 +32,7 @@ from entify import entify
 class TestEntify(unittest.TestCase):
     def test_entify(self):
         test_string = 'Åke Bjärne Österman. Äldre konstapel.'
-        expected = '&#xC5;ke Bj&#xC5;rne &#xF6;sterman'
+        expected = '&#xC5;ke Bj&#xE4;rne &#xD6;sterman. &#xC4;ldre konstapel.'
         self.assertEqual(entify(test_string), expected, 'expected {0}'.format(expected))
 
 if __name__ == '__main__':

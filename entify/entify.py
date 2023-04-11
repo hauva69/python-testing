@@ -25,8 +25,10 @@ Transform accented characters to entities.
 | Ö      | &#xD6;     |
 '''
 
+import logging
 import sys
 
+logging.basicConfig(level=logging.DEBUG)
 
 CONVERSION = {
     'Á': '&#xC1;',
@@ -51,7 +53,13 @@ CONVERSION = {
 
 def entify(string: str) -> str:
     '''Transforms accented characters of a string to entities.'''
-    return 'FIXME'
+    entified = string
+
+    for key, value in CONVERSION.items():
+        logging.debug('key=%s value=%s', key, value)
+        entified = entified.replace(key, value)
+
+    return entified
 
 if __name__ == '__main__':
-    entify('Åke Bjärne Österman. Äldre konstapel.')
+    print(entify('Åke Bjärne Österman. Äldre konstapel.'))
