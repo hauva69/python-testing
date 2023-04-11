@@ -27,7 +27,7 @@ Transform accented characters to entities.
 
 import sys
 
-def entify(string: str):
+def entify(string: str) -> str:
     '''Transforms accented characters of a string to entities.'''
     return 'FIXME'
 
