@@ -21,8 +21,8 @@ Transform accented characters to entities.
 | Å      | &#xC5;     |
 | Ä      | &#xC4;     |
 | ä      | &#xE4;     |
-| ö      | &#xF6;     |
-| Ö      | &#xD6;     |
+| Ö      | &#xF6;     |
+| ö      | &#xD6;     |
 '''
 
 import sys
