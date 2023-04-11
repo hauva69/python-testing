@@ -39,7 +39,7 @@ class TestInsert(unittest.TestCase):
     def _test_table_does_not_exist(self):
         conn = self._get_connection()
         cursor = conn.cursor()
-        sql = """SELECT uid, created FROM requests WHERE uid = 'hauva'"""
+        sql = """SELECT uid, responsibility, created FROM requests WHERE uid = 'hauva'"""
         with self.assertRaises(sqlite3.OperationalError):
             cursor.execute(sql)
             result = cursor.fetchone()
@@ -47,23 +47,28 @@ class TestInsert(unittest.TestCase):
         conn.close()
 
     def test_user_exists(self):
+        responsibility = 'kändivästüü'
         conn = self._get_connection()
         cursor = conn.cursor()
         sql = '''CREATE TABLE requests(UID, RESPONSIBILITY, CREATED)'''
         cursor.execute(sql)
-        sql = """INSERT INTO requests (uid, responsibility, created) VALUES ('hauva', 'Skändivästüü',
-              current_timestamp)"""
+        sql = """INSERT INTO requests (uid, responsibility, created) VALUES ('hauva', '{0}', current_timestamp)""".format(responsibility)
+
         try:
             cursor.execute(sql)
             conn.commit()
-        except sqlite3.OperationalError:
-            pass
+        except sqlite3.OperationalError as ex:
+            logging.error(ex)
+        except Exception as ex:
+            logging.error(ex)
 
-        sql = """SELECT uid, responsibility, created FROM requests WHERE uid = 'hauva'"""
+        # sql = """SELECT uid, responsibility, created FROM requests WHERE uid = 'hauva'"""
+        sql = "SELECT * FROM requests"
         cursor.execute(sql)
         result = cursor.fetchall()
         logging.debug('result=%s', result)
         self.assertEqual(result[0][0], 'hauva', 'Should be "hauva"')
+        self.assertEqual(result[0][1], responsibility, 'Should be "{0}"'.format(responsibility))
         cursor.close()
         conn.close()
 
