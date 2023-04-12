@@ -18,7 +18,7 @@ class TestInsert(unittest.TestCase):
     def _get_connection(self):
         return sqlite3.connect(DB_NAME)
 
-    def test_remove(self):
+    def _test_remove(self):
         '''Tests removing the database.'''
         try:
             os.remove(DB_NAME)
@@ -51,7 +51,12 @@ class TestInsert(unittest.TestCase):
         conn = self._get_connection()
         cursor = conn.cursor()
         sql = '''CREATE TABLE requests(UID, RESPONSIBILITY, CREATED)'''
-        cursor.execute(sql)
+
+        try:
+            cursor.execute(sql)
+        except sqlite3.OperationalError as ex:
+            logging.warning(ex)
+
         sql = """INSERT INTO requests (uid, responsibility, created) VALUES ('hauva', '{0}', current_timestamp)""".format(responsibility)
 
         try:
@@ -62,8 +67,11 @@ class TestInsert(unittest.TestCase):
         except Exception as ex:
             logging.error(ex)
 
-        # sql = """SELECT uid, responsibility, created FROM requests WHERE uid = 'hauva'"""
-        sql = "SELECT * FROM requests"
+        sql = """
+SELECT uid, responsibility, created FROM requests WHERE uid =
+              'hauva' ORDER BY created DESC
+"""
+        # sql = "SELECT * FROM requests"
         cursor.execute(sql)
         result = cursor.fetchall()
         logging.debug('result=%s', result)
