@@ -28,7 +28,7 @@ Transform accented characters to entities.
 import logging
 import sys
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 CONVERSION = {
     'Á': '&#xC1;',
