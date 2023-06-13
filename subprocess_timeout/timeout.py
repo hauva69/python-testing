@@ -6,8 +6,8 @@ Testime subprocess.check_output().
 
 import subprocess
 
-def _timeout_5_success():
-    subprocess.check_output(['/usr/bin/sleep', '2'], stderr=subprocess.STDOUT, timeout=5)
+def _timeout(sleep: str, timeout: int):
+    subprocess.check_output(['/usr/bin/sleep', sleep], stderr=subprocess.STDOUT, timeout=timeout)
 
 if __name__ == '__main__':
-    _timeout_5_success()
+    _timeout('2', 5)
