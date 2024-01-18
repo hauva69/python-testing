@@ -1,1 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<chess>
+    <game>
+        <type>correspondence</type>
+        <roster>
+            <player color="white">
+                <givenname>Ari</givenname>
+                <surname>Mäkelä</surname>
+                <rating type="ICCF">2300</rating>
+            </player>
+            <player color="black">
+                <givenname>Aivars</givenname>
+                <surname>Kažoks</surname>
+                <rating type="ICCF">2293</rating>
+            </player>
+        </roster>
+    </game>
+</chess>
