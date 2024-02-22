@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chess>
+<tournament url="https://www.iccf.com/event?id=91321">
+<description>
+    <html>
+        <head>
+            <title>WC45/pr, WCCC45PR</title>
+        </head>
+        <body>
+
+        </body>
+    </html>
+</description>
     <game>
         <type>correspondence</type>
         <roster>
@@ -15,4 +26,5 @@
             </player>
         </roster>
     </game>
+    </tournament>
 </chess>
