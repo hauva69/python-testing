@@ -10,7 +10,7 @@ import sys
 
 logging.basicConfig(level=logging.DEBUG)
 
-FIELDS = [1, 3, 4]
+FIELDS = [1, 3, 4, 5]
 
 def increment(number: int, format='06') -> str:
     '''Increment an integer and return it as a formatted string.'''
@@ -30,6 +30,8 @@ def _main():
         index = 0
 
         for row in reader:
+            data = None
+
             for field in row:
                 if index in FIELDS:
                     if index == 1:
@@ -37,6 +39,15 @@ def _main():
                         incremented = start + '-' + increment(int(data), '04')
                         logging.debug('incremented=%s type=%s', data, type(data))
                         row[index] = incremented
+                    elif index == 5:
+                        email = row[index]
+                        logging.debug('email=%s', email)
+                        replaced = email[1:6]
+                        incremented = increment(int(replaced), '')
+                        email = email.replace(replaced, incremented)
+                        logging.debug('replaced=%s incremented=%s', replaced, incremented)
+                        logging.debug('email=%s', email)
+                        row[index] = email
                     else:
                         data, end = row[index].split('_')
                         incremented = 'f' + increment(int(data[1:]), '') + '_' + end
