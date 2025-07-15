@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""A simple HTTP reverse proxy in Python."""
+
 from http.server import BaseHTTPRequestHandler,HTTPServer
 import argparse, logging, os, random, sys, requests
 
@@ -119,7 +121,7 @@ def _main():
     httpd = ThreadedHTTPServer(server_address, ProxyHTTPRequestHandler)
     logging.info('http server is running as reverse proxy')
     httpd.serve_forever()
-    
+
 def main(argv=sys.argv[1:]):
     global hostname
     logging.debug('hostname=aseqa.poliisi.fi')
@@ -137,4 +139,3 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         logging.info('KeyboardInterrupt, exiting')
         sys.exit(0)
-        
