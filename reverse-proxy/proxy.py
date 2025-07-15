@@ -3,10 +3,12 @@
 """A simple HTTP reverse proxy in Python."""
 
 from http.server import BaseHTTPRequestHandler,HTTPServer
-import argparse, logging, os, random, sys, requests
-
+import argparse
+import logging
+import sys
 from socketserver import ThreadingMixIn
-import threading
+
+import requests
 
 logging.basicConfig(level=logging.DEBUG)
 
