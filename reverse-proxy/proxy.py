@@ -15,9 +15,11 @@ logging.basicConfig(level=logging.DEBUG)
 hostname = 'en.wikipedia.org'
 
 def merge_two_dicts(x, y):
+    "Merges two dicts."
     return x.update(y)
 
 def set_header():
+    """Sets headers."""
     headers = {
         'Host': hostname
     }
@@ -25,12 +27,15 @@ def set_header():
     return headers
 
 class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
+    """Proxies requests."""
     protocol_version = 'HTTP/1.0'
     def do_HEAD(self):
+        """Handles HEAD requests."""
         self.do_GET(body=False)
         return
 
     def do_GET(self, body=True):
+        """Handles GET requests."""
         logging.debug('self.path=%s', self.path)
         sent = False
         try:
@@ -57,6 +62,7 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
                 self.send_error(404, 'error trying to proxy GET')
 
     def do_POST(self, body=True):
+        """Handles POST requests."""
         sent = False
         try:
             url = 'https://{}{}'.format(hostname, self.path)
@@ -80,6 +86,7 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
                 self.send_error(404, 'error trying to proxy POST')
 
     def parse_headers(self):
+        """Parses HTTP headers."""
         req_header = {}
         for line in self.headers:
             line_parts = [o.strip() for o in line.split(':', 1)]
@@ -88,6 +95,7 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
         return req_header
 
     def send_resp_headers(self, resp):
+        """Sends response headers."""
         respheaders = resp.headers
         logging.debug('Response Header')
         for key in respheaders:
@@ -104,6 +112,7 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
 def parse_args(argv=sys.argv[1:]):
+    """Parses command line arguments."""
     parser = argparse.ArgumentParser(description='Proxy HTTP requests')
     parser.add_argument('--port', dest='port', type=int, default=9999,
                         help='serve HTTP requests on specified port (default: random)')
