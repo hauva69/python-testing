@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 from http.server import BaseHTTPRequestHandler,HTTPServer
 import argparse, logging, os, random, sys, requests
 
@@ -24,7 +25,7 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_HEAD(self):
         self.do_GET(body=False)
         return
-        
+
     def do_GET(self, body=True):
         logging.debug('self.path=%s', self.path)
         sent = False
@@ -34,7 +35,9 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
 
             logging.debug('req_header=%s', req_header)
             logging.debug('url=%s', url)
-            resp = requests.get(url, headers=merge_two_dicts(req_header, set_header()), verify=False)
+            resp = requests.get(url,
+                                headers=merge_two_dicts(req_header, set_header()),
+                                verify=False)
             logging.debug('resp=%s', resp)
             sent = True
 
@@ -57,7 +60,10 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
             post_body = self.rfile.read(content_len)
             req_header = self.parse_headers()
 
-            resp = requests.post(url, data=post_body, headers=merge_two_dicts(req_header, set_header()), verify=False)
+            resp = requests.post(url,
+                                 data=post_body,
+                                 headers=merge_two_dicts(req_header, set_header()),
+                                 verify=False)
             sent = True
 
             self.send_response(resp.status_code)
@@ -81,7 +87,13 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
         respheaders = resp.headers
         logging.debug('Response Header')
         for key in respheaders:
-            if key not in ['Content-Encoding', 'Transfer-Encoding', 'content-encoding', 'transfer-encoding', 'content-length', 'Content-Length']:
+            if key not in [
+                'Content-Encoding',
+                'Transfer-Encoding',
+                'content-encoding',
+                'transfer-encoding',
+                'content-length',
+                'Content-Length']:
                 logging.debug(key, respheaders[key])
                 self.send_header(key, respheaders[key])
         self.send_header('Content-Length', len(resp.content))
